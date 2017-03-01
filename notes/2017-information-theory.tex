@@ -401,18 +401,19 @@ H(\alpha) - \log k
 Введём обозначения для вероятностей событий совместного распределения вероятностей \((\alpha, \beta)\). Пусть пара \((a_i, b_j)\) имеет вероятность \(p_{i,j}\), событие \([\alpha=a_i]\) имеет вероятность \(p_{i,*} = p_{i,1} + \dotsb + p_{i,n}\), а событие 
 \([\beta=b_j]\)~--- вероятность \(p_{*,j} = p_{1,j} + \dotsb + p_{k,j}\). В этих обозначениях неравенство \(H(\alpha, \beta) \le H(\alpha) + H(\beta)\) переписывается как
 \[
-\sum_{i,j}p_{i,j} \log\frac1{p_{i,j}} \le
-\sum_{i}\sum_{j} p_{i,j} \log\frac1{p_{i,*}} +
-\sum_{j}\sum_{i} p_{i,j} \log\frac1{p_{*,j}}.
+\sum_{i,j}\cdot p_{i,j}\cdot \log\frac1{p_{i,j}} \le
+\sum_{i}\sum_{j} p_{i,j}\cdot \log\frac1{p_{i,*}} +
+\sum_{j}\sum_{i} p_{i,j}\cdot \log\frac1{p_{*,j}}.
 \]
 Перенесём всё в левую часть и применим неравенство Йенсена.
-\[
-\sum_{i,j}p_{i,j} \log\frac{p_{i,*}p_{*,j}}{p_{i,j}} \le
-\log\left(\sum_{i,j}p_{i,j}\cdot \frac{p_{i,*}p_{*,j}}{p_{i,j}}\right) =
-\log\left(\sum_{i,j}(p_{i,*}p_{*,j})\right) = 
-\log \underbrace{\left(\sum_{i}p_{i,*}\right)}_1\cdot
+\begin{multline*}
+\sum_{i,j}p_{i,j}\cdot \log\frac{p_{i,*}\cdot p_{*,j}}{p_{i,j}} \le
+\log\left(\sum_{i,j}p_{i,j}\cdot \frac{p_{i,*}\cdot p_{*,j}}{p_{i,j}}\right) =
+\log\left(\sum_{i,j}p_{i,*}\cdot p_{*,j}\right) = \\
+= \log \underbrace{\left(\sum_{i}p_{i,*}\right)}_1\cdot
      \underbrace{\left(\sum_{j}p_{*,j}\right)}_1 = 0.
-\]
+\end{multline*}
+
 Равенство в неравенстве Йенсена для $f(x) = \log(x)$ достигается только, если все точки равны, т.е. 
 для любых \(i,j\) \(\frac{p_{i,*}p_{*,j}}{p_{i,j}} = c\) для некоторой константы \(c\). Несложно заметить, что \(c =
 1\), т.к. выполняется следующее равенство \(\sum_{i,j} {p_{i,*}p_{*,j}} = c \sum_{i,j}{p_{i,j}}\) в котором обе суммы

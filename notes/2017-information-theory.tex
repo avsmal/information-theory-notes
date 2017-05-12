@@ -3015,13 +3015,13 @@ $t\le s + 2\log n + O(1)$.
 Какова вероятность 
 того, что ни одно из этих событий не произойдёт? Есть два крайних случая. 
 \begin{itemize}
-    \item Если про природу $\{A_i\}$ ничего дополнительно не известно, то
+    \item Если про природу событий $\{A_i\}_{i=1}^n$ ничего не известно, то
     \[
     \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
         \ge 1 - \varepsilon_1 - \varepsilon_2 -\dotsb -\varepsilon_n. 
     \]
 
-    \item Если все $A_i$ независимы в совокупности, то
+    \item Если все $\{A_i\}_{i=1}^n$ независимы в совокупности, то
     \[
     \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
         = (1 - \varepsilon_1)\cdot(1 - \varepsilon_2) \cdot\dotso\cdot (1 - \varepsilon_n). 
@@ -3029,37 +3029,109 @@ $t\le s + 2\log n + O(1)$.
 \end{itemize}
 
 Локальная лемма Ловаса даёт оценку в промежуточном случае, когда зависимость
-между событиями локальна: каждое $A_i$ зависимо только с относительно небольшим
+между событиями \emph{локальна}: каждое $A_i$ зависимо только с относительно небольшим
 количеством \emph{соседей}. Будем обозначать $N(i)$~--- множество соседей события $i$.
 
-\begin{theorem}[Локальная лемма Ловаса] Если для каждого $i$ выбрано $\varepsilon_i < 1$ и
+\begin{theorem}[Локальная лемма Ловаса] Пусть задано множество из $n$ событий $\{\seqn{A}{n}\}$,
+    в котором каждое событие $A_i$ независимо в совокупности со всеми событиями $A_j$, $j\not\in N(i)$.
+    Если для каждого $i$ выбрано $\varepsilon_i < 1$ так, что
     \[
     \Pr[A_i]\le \varepsilon_i\cdot\prod_{j\in N(i)} (1 - \varepsilon_j),
     \]
-    то вероятность того, что произойдёт ни одного из событий $A_i$
+    то вероятность того, что не произойдёт ни одного из событий
     \[
     \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
         \ge (1 - \varepsilon_1)\cdot(1 - \varepsilon_2) \cdot\dotso\cdot (1 - \varepsilon_n). 
     \]
 \end{theorem}
 \begin{proof}
-    Начнём с простых утверждений.
+    Начнём с пары простых утверждений. По определению условной вероятности
     \[
     \Pr[A\mid B] = \frac{\Pr[A\land B]}{\Pr[B]} \le \frac{\Pr[A]}{\Pr[B]}.
     \]
     Данное утверждение можно \emph{,,релятивизировать``}, т.е. добавить во все вероятности
-    дополнительное условие $C$.
-    \[
+    дополнительное условие $C$:
+    \begin{equation}\label{eq:lll:fact}
     \Pr[A\mid B\land C] \le \frac{\Pr[A\mid C]}{\Pr[B \mid C]}.
+    \end{equation}
+    
+    Будем доказывать теорему по индукции. Доказательство индукционного перехода будет 
+    состоять из доказательства двух утверждений.
+    \begin{enumerate}
+        \item Для любого $i$ и множества $J=\{\seqn{j}{k}\} \subset [n]$, $i\not\in J$:
+            \begin{equation}\label{eq:lll:ind1}
+                \Pr[A_i\mid \overline A_{j_1}\land \overline A_{j_2}
+                    \land\dotsb\land \overline A_{j_k}] \le \varepsilon_i.
+             \end{equation}
+        \item Для любых непересекающихся $I,J\subset [n]$, $I=\{\seqn{i}{\ell}\}$, $J=\{\seqn{j}{m}\}$ 
+            \begin{equation}\label{eq:lll:ind2}
+                \Pr[\overline A_{i_1}\land \overline A_{i_2} \land\dotsb\land \overline A_{i_\ell} \mid 
+                    \overline A_{j_1}\land \overline A_{j_2} \land\dotsb\land \overline A_{j_m} ] \ge
+                    (1 - \varepsilon_{i_1})\cdot(1 - \varepsilon_{i_2})\cdot\dotso\cdot(1 - \varepsilon_{i_\ell}).
+            \end{equation}
+    \end{enumerate}
+    Связь этих двух утверждений мы сформулируем в виде следующих двух лемм.
+    
+    \begin{lemma}\label{lm:lll:l1}
+    Если неравенство~\eqref{eq:lll:ind1} верно всех $k \le t$, то неравенство~\eqref{eq:lll:ind2} верно для $\ell + m \le t + 1$. 
+    \end{lemma}
+    \begin{proof}
+    Раскроем вероятность в левой части неравенства~\eqref{eq:lll:ind2} 
+    по ,,релятивизированному`` (т.е. с дополнительным условием)
+    определению условной вероятности $\Pr[A \land B\mid C] = \Pr[A \mid B \land C]\cdot \Pr[B\mid C]$
+    (это формулу нужно будет применить $k$ раз):
+    \[
+        \begin{aligned}
+        \Pr[\overline A_{i_1}\land \overline A_{i_2} \land\dotsb\land \overline A_{i_\ell} \mid 
+            \overline A_{j_1}\land \overline A_{j_2} \land\dotsb\land \overline A_{j_m} ] =\,
+        &\Pr[\overline A_{i_1} \mid \overline A_{i_2}\land\dotsb\land \overline A_{i_\ell}\land 
+            \overline A_{j_1}\land \dotsb\land \overline A_{j_m} ] \cdot\\
+        &\Pr[\overline A_{i_2} \mid \overline A_{i_3}\land\dotsb\land \overline A_{i_\ell}\land 
+            \overline A_{j_1}\land \dotsb\land \overline A_{j_m} ]\cdot\\
+        &\ \vdots\\
+        &\Pr[\overline A_{i_\ell} \mid 
+            \overline A_{j_1}\land \dotsb\land \overline A_{j_m} ]\\
+        \ge\,&(1-\varepsilon_{i_i})\cdot(1-\varepsilon_{i_2})\cdot\dotso\cdot(1-\varepsilon_{i_\ell}).
+        \end{aligned}
     \]
+    \end{proof}
 
+
+    \begin{lemma}\label{lm:lll:l2}
+    Если неравенство~\eqref{eq:lll:ind2} верно для всех $\ell$ и $m$, таких что $\ell + m = t$, 
+    то неравенство~\eqref{eq:lll:ind1} верно для $k = t$.
+    \end{lemma}
+    \begin{proof}
+    Если $I\cap N(i) = \emptyset$, то неравенство~\eqref{eq:lll:ind1} выполняется, т.к. 
+    $A_i$ независимо в совокупности с $\seqin{A}{i}{k}$. Иначе введём следующие обозначения:
+    \[N = \bigwedge_{j\in I\cap N(i)} \overline A_j,\quad
+      F = \bigwedge_{j\in I\setminus N(i)} \overline A_j.
+    \]
+    В этих обозначениях левая часть неравенства~\eqref{eq:lll:ind1} переписывается следующим образом:
+    \[
+    \Pr[A_i\mid N\land F ] 
+        \le \frac{\Pr [A_i\mid F]}{\Pr[N\mid F]} 
+        =   \frac{\Pr [A_i]}{\Pr[N\mid F]} 
+        \le \frac{\varepsilon_i \cdot \prod_{j\in N(i)} (1-\varepsilon_j)}
+                                     {\prod_{j\in N(i)} (1-\varepsilon_j)} \le \varepsilon_i.
+    \]
+    Тут первое неравенство является применением неравенства~\eqref{eq:lll:fact}, равенство выполняется,
+    т.к. $A_i$ независимо от $F$ ($A_i$ независимо от не соседей $A_i$), а второе неравенство
+    следует непосредственно из условия теоремы (числитель) и неравенства~\eqref{eq:lll:ind2} для $\ell + m = k$ (знаменатель).
+    \end{proof}
+    
+    Теперь можно описать, как будет устроена индукция. База индукции~--- это неравенство~\eqref{eq:lll:ind1}
+    для $k = 0$ (следует из условия теоремы), что то же самое, что и неравенство~\eqref{eq:lll:ind2} для 
+    $\ell = 1$ и $m = 0$. 
+    Теперь предположим, что мы уже доказали неравенства~\eqref{eq:lll:ind1} для $k < t$ и неравенства~\eqref{eq:lll:ind2} для
+    $\ell + m \le t$. Применим сначала лемму~\ref{lm:lll:l2} и получим неравенство~\eqref{eq:lll:ind1} для $k = t$.
+    Затем при помощи леммы~\ref{lm:lll:l1} мы получим неравенство~\eqref{eq:lll:ind2} для $\ell + m = t + 1$. 
+    
+    Завершает доказательство следующее наблюдение: локальная лемма Ловаса является частным случаем
+    неравенства~\eqref{eq:lll:ind2} при $\ell = n$ и $m = 0$.
+    
 
 \end{proof}
-
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{thebibliography}{9}

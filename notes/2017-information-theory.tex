@@ -2967,18 +2967,20 @@ $n$-битными числами выполняются за O(1)).
 а после них стоит '$1$'.
 \begin{center}
 \begin{tikzpicture}[node distance=1cm]
+    \tikzstyle{bigrect}=[draw, minimum width=1.5cm, minimum height=.7cm];
+    \tikzstyle{rect}=[draw, minimum width=1cm, minimum height=.7cm];
     \node (y) at (0,0) {$\bar y:$};
     \node (x) at (0,1) {$\bar x:$};
-    \node[right of=x,draw,minimum width=1cm] (x1) {\strut};
-    \node[right of=y,draw,minimum width=1cm] (y1) {\strut};
+    \node[rect,right of=x] (x1) {};
+    \node[rect,right of=y] (y1) {};
     \node[right = 0mm of x1] (x2) {$b$};
     \node[right = 0mm of y1] (y2) {$b$};
-    \node[right = 0mm of x2,draw,minimum width=1.5cm] (x3) {\strut$v_t\dotso v_1$};
-    \node[right = 0mm of y2,draw,minimum width=1.5cm] (y3) {\strut$\bar v_t\dotso\bar v_1$};
+    \node[right = 0mm of x2,bigrect] (x3) {$v_t\dotso v_1$};
+    \node[right = 0mm of y2,bigrect] (y3) {$\bar v_t\dotso\bar v_1$};
     \node[right = 0mm of x3] (x4) {$1$};
     \node[right = 0mm of y3] (y4) {$1$};
-    \node[right = 0mm of x4,draw,minimum width=1cm]  {\strut};
-    \node[right = 0mm of y4,draw,minimum width=1cm]  {\strut};
+    \node[right = 0mm of x4,rect]  {};
+    \node[right = 0mm of y4,rect]  {};
     \node[below = 1mm of y4] {$j$};
 \end{tikzpicture}
 \end{center}
@@ -3006,6 +3008,60 @@ $t\le s + 2\log n + O(1)$.
     = 2\log n + O(1).
 \]
 
+
+\subsection{Локальная лемма Ловаса}
+Пусть задан некоторый набор событий $\{\seqn{A}{n}\}$, и про каждое событие
+известна его вероятность $\Pr[A_i] = \varepsilon_i$. 
+Какова вероятность 
+того, что ни одно из этих событий не произойдёт? Есть два крайних случая. 
+\begin{itemize}
+    \item Если про природу $\{A_i\}$ ничего дополнительно не известно, то
+    \[
+    \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
+        \ge 1 - \varepsilon_1 - \varepsilon_2 -\dotsb -\varepsilon_n. 
+    \]
+
+    \item Если все $A_i$ независимы в совокупности, то
+    \[
+    \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
+        = (1 - \varepsilon_1)\cdot(1 - \varepsilon_2) \cdot\dotso\cdot (1 - \varepsilon_n). 
+    \]
+\end{itemize}
+
+Локальная лемма Ловаса даёт оценку в промежуточном случае, когда зависимость
+между событиями локальна: каждое $A_i$ зависимо только с относительно небольшим
+количеством \emph{соседей}. Будем обозначать $N(i)$~--- множество соседей события $i$.
+
+\begin{theorem}[Локальная лемма Ловаса] Если для каждого $i$ выбрано $\varepsilon_i < 1$ и
+    \[
+    \Pr[A_i]\le \varepsilon_i\cdot\prod_{j\in N(i)} (1 - \varepsilon_j),
+    \]
+    то вероятность того, что произойдёт ни одного из событий $A_i$
+    \[
+    \Pr[\overline{A}_1\land\overline{A}_2\land\dotsb\land\overline{A}_n] 
+        \ge (1 - \varepsilon_1)\cdot(1 - \varepsilon_2) \cdot\dotso\cdot (1 - \varepsilon_n). 
+    \]
+\end{theorem}
+\begin{proof}
+    Начнём с простых утверждений.
+    \[
+    \Pr[A\mid B] = \frac{\Pr[A\land B]}{\Pr[B]} \le \frac{\Pr[A]}{\Pr[B]}.
+    \]
+    Данное утверждение можно \emph{,,релятивизировать``}, т.е. добавить во все вероятности
+    дополнительное условие $C$.
+    \[
+    \Pr[A\mid B\land C] \le \frac{\Pr[A\mid C]}{\Pr[B \mid C]}.
+    \]
+
+
+\end{proof}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{thebibliography}{9}
     \bibitem{veresch12} Н.К. Верещагин, Е.В. Щепин. \emph{Информация, кодирование, предсказание}, МЦНМО, 2012.
 

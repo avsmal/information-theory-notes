@@ -1,0 +1,148 @@
+% !TeX spellcheck = ru_RU
+
+\documentclass[12pt]{article}
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{xspace}
+\usepackage{fullpage}
+
+%% CALCULATOR
+\usepackage{calc}
+%% STYLE
+\usepackage[dotinlabels]{titletoc}
+\usepackage[small]{titlesec}
+%% TITLESEC BUG WORKAROUND %%
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+%% END %%
+\titlelabel{\thetitle.\quad}
+%% Puts "." instead of ":" in captions
+\usepackage{ccaption}
+\captiondelim{. }
+
+%\usepackage{indentfirst}
+%% OTHER
+
+\usepackage[bookmarks=false, colorlinks, unicode, pdfstartview=FitH, pdftex]{hyperref}
+\hypersetup{ 
+ plainpages=true,
+ linkcolor=blue,
+ citecolor=red,
+ menucolor=blue,
+ pdfnewwindow=true
+}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\bitstr}{\bits^*}
+\newcommand{\sshalf}{{\textstyle\frac12}}
+\newcommand{\seqn}[2]{{#1}_1,{#1}_2,\dotsc,{#1}_{#2}}
+\newcommand{\seqin}[3]{{#1}_{{#2}_1},{#1}_{{#2}_2},\dotsc,{#1}_{{#2}_{#3}}}
+\newcommand{\IC}{\mathrm{IC}}
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rng}{rng}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{statement}{Утверждение}[section]
+\newtheorem{corollary}{Следствие}[section]
+
+\theoremstyle{remark}
+\newtheorem{example}{Пример}[section]
+\newtheorem{exercise}{Упражнение}[section]
+\newtheorem{remark}{Замечание}[section]
+\newtheorem{problem}{Задача}[section]
+
+\newenvironment{tasks}{\paragraph{Задачи.}\begin{enumerate}}{\end{enumerate}}
+
+%opening
+\title{Вопросы к экзамену по ,,теорит информации``}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{enumerate}
+    \item \textbf{Информация по Хартли.} Мотивация и определение. Информация в проекциях.
+        Игра в 10 вопросов. Цена информации. Упорядочение камней по весу.
+        Поиск фальшивой монетки (разные вариации).
+        Логика знаний.
+
+    \item \textbf{Энтропия Шеннона.} Мотивация и определение. Свойства энтропии. Энтропия пары.
+        Условная энтропия. Свойства условной энтропии.
+	    Взаимная информация. Свойства взаимной информации.
+	    Применение энтропии к задаче о поиске фальшивой монетки.
+	    
+	\item \textbf{Кодирование.} Однозначно декодируемые коды.
+	Неравенство Крафта-Макмилана. Префиксные коды. 
+	Теоремы Шеннона об однозначно декодируемых кодах.
+	Код Шеннона-Фано, код Хаффмана. 
+
+	\item \textbf{Блоковое кодирование с ошибками.}
+	Блоковое кодирование. Арифметическое кодирование.
+	Теоремы Шеннона о блоковом кодировании с ошибками.
+	
+	\item \textbf{Свойства распределений.} Энтропийные профили 
+	для одного, двух и трёх распределений. Неравенства о тройке распределений (два).
+	
+	\item \textbf{Криптография.} Теорема Шеннона об энтропии ключа шифрования. Схемы разделения секрета. Пороговая схема Шамира.
+	Энтропия секрета существенного участника.
+	Нижняя оценка $3/2$ на энтропию ключа участника. Теорема Чирмаза.
+
+	\item \textbf{Коммуникационная сложность.} Верхние оценки на
+	коммуникационную сложность функций. Нижние оценки: метод
+	размера прямоугольников, метод трудного множества и метод ранга
+	матрицы. Сложность $EQ$ и $GE$.
+	
+	\item \textbf{Связь протоколов и формул.} Теорема Карчмера-Вигдерсона. Внешнее и внутреннее информационное разглашение и их связь. Теорема о связи размера протокола
+	и внешнего информационного разглашения. Теорема Храпченко.
+	
+	\item \textbf{Колмогоровская сложность.} Теорема о существовании
+	оптимального способа описания. Определение колмогоровской сложности.
+	Свойства колмогоровской сложности.
+	Слов большой сложности. Невычислимость колмогоровской сложности.
+	Связь колмогоровской сложности и энтропии. 
+	
+	\item \textbf{Условная колмогоровская сложность и сложность пары.} 
+	Условная сложность: существование оптимального способа описания, определение и свойства. Сложность пары. Теорема Колмогорова-Левина.
+	
+	\item \textbf{Метод несжимаемых объектов.} Теорема об иерархии
+	языков, распознаваемых конечными автоматами 
+	с несколькими головками.
+	
+	\item \textbf{Алгоритмическая случайность.} Случайность по Мартину-Лёфу. Свойства. Теорема о том, что случайные последовательности
+	случайны по Мартину-Лёфу.
+	
+	\item \textbf{Применение колмогоровской сложности.} 
+	Перенос информации по ленте. Нижняя оценка на копирование
+	на одноленточной машине Тьюринга. 
+	Алгоритм сложения битовых чисел.
+	
+	\item \textbf{Локальная лемма Ловаса.} Локальная лемма Ловаса.
+	Симметричная локальная лемма Ловаса. Применение локальной леммы Ловаса
+	к последовательностям с запрещёнными словами.
+	
+	\item \textbf{Эффективное доказательство леммы Ловаса}.
+	Теорема Мозера-Тардош.
+	
+\end{enumerate}
+
+\end{document}
+% vim: set tw=120:

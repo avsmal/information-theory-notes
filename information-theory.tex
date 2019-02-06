@@ -1677,12 +1677,13 @@ $t-1$: выберем $t-1$ коэффициент независимо и ра�
     \begin{tikzpicture}
     \tikzstyle{vert}=[circle, draw, fill=black!50,
                             inner sep=0pt, minimum width=4pt]
-    \node[vert, label=below:1, label=above:\strut] (a) at (1,0) {}; 
-    \node[vert, label=below:2] (b) at (2,0) {};
-    \node[vert, label=below:3] (c) at (3,0) {};
-    \node[vert, label=below:4] (d) at (4,0) {};
+    \node at (0,0.5) {};
+    \foreach \i/\n in {1/a, 2/b, 3/c, 4/d} 
+        \node[vert, label=below:\i] (\n) at (\i,0) {}; 
 
-    \path (a) edge (b) edge (c) edge (d);
+    \path (a) edge (b);
+    \path (b) edge (c);
+    \path (c) edge (d);
     \end{tikzpicture}
     \end{center}
     Покажем, что для этой структуры доступа $H(S_2) + H(S_3) \ge 3H(S_0)$, другими словами

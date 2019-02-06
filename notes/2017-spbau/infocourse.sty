@@ -1,0 +1,63 @@
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{xspace}
+\usepackage{fullpage}
+
+%% CALCULATOR
+\usepackage{calc}
+%% STYLE
+\usepackage[raggedright,small]{titlesec}
+\usepackage[dotinlabels]{titletoc}
+\titlelabel{\thetitle.\quad}
+%% Puts "." instead of ":" in captions
+\usepackage{ccaption}
+\captiondelim{. }
+
+%\usepackage{indentfirst}
+%% OTHER
+
+\usepackage[bookmarks=false, colorlinks, unicode, pdfstartview=FitH, pdftex]{hyperref}
+\hypersetup{ 
+ plainpages=true,
+ linkcolor=blue,
+ citecolor=red,
+ menucolor=blue,
+ pdfnewwindow=true
+}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\bitstr}{\bits^*}
+\newcommand{\sshalf}{{\textstyle\frac12}}
+\newcommand{\seqn}[2]{{#1}_1,{#1}_2,\dotsc,{#1}_{#2}}
+\newcommand{\seqin}[3]{{#1}_{{#2}_1},{#1}_{{#2}_2},\dotsc,{#1}_{{#2}_{#3}}}
+\newcommand{\IC}{\mathrm{IC}}
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rng}{rng}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{statement}{Утверждение}[section]
+\newtheorem{corollary}{Следствие}[section]
+
+\theoremstyle{remark}
+\newtheorem{example}{Пример}[section]
+\newtheorem{exercise}{Упражнение}[section]
+\newtheorem{remark}{Замечание}[section]
+\newtheorem{problem}{Задача}[section]
+
+\newenvironment{tasks}{\paragraph{Задачи.}\begin{enumerate}}{\end{enumerate}}
+

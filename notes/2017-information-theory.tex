@@ -53,6 +53,7 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\rng}{rng}
+\DeclareMathOperator*{\E}{\mathbb{E}}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Определение}[section]
@@ -215,7 +216,7 @@
 \end{itemize}
 
 \begin{exercise}
-За 4 взвешивания одну найти фальшивую монету из 12, если её относительный вес неизвестен. Указание: воспользуйтесь ,,жадной`` стратегией, при которой каждое взвешивание приносит максимум информации.
+За три взвешивания найти одну фальшивую монету из 12, если её относительный вес неизвестен. Указание: воспользуйтесь ,,жадной`` стратегией, при которой каждое взвешивание приносит максимум информации.
 \end{exercise}
 
 \begin{exercise}
@@ -312,6 +313,13 @@ $y\sim x$.
     Какого цвета шляпа на третьем джентльмене?
 \end{problem}
 
+\begin{problem}
+    У короля есть 9 бутылок вина. В одной бутылке вино отравленное.      
+    У короля есть две служанки. Каждый день любая служанка может намешать в свой стакан коктейль из разных бутылок и выпить, но служанке даётся только одна попытка в день, в фиксированное время, ровно в полдень (так что если обе служанки пробуют, одна из них не может учитывать результат второй в тот же день). Любое количество отравленного вина в стакане быстро убивает.
+    
+    Как обнаружить, какая из бутылок отравлена, за два дня?
+\end{problem}
+
 
 \section{Вероятностный подход}
 \subsection{Энтропия Ш\'{е}ннона}
@@ -383,13 +391,13 @@ $W_n$ определено только тогда, когда все $n_i$ це
 
 \begin{theorem}[Неравенство Йенсена]
 Пусть функция \(f ( x ) \) является вогнутой на некотором промежутке \(\mathcal {X}\)
-и числа \(\seqn{q}{n}>0\) таковы, что \(q_1+\ldots +q_{n}=1\). 
+и числа \(\seqn{q}{n}>0\) таковы, что \(q_1+\dotsb +q_{n}=1\). 
 Тогда для любых \(\seqn{x}{n}\) из промежутка \(\mathcal X\) выполняется неравенство:
 \[
 \sum _{{i=1}}^{{n}}q_{i}f(x_{i})\leq f\left(\sum _{{i=1}}^{{n}}q_{i}x_{i}\right). 
 \]
 \end{theorem}
-\begin{proof}[Доказательство леммы \ref{lm:entropy-properties}]
+\begin{proof}[Доказательство леммы~\ref{lm:entropy-properties}]
 Первое свойство следует напрямую из определения: каждый член суммы \(H(\alpha)\) неотрицателен и равен нулю только в случае, если \(p_i = 0\) или \(p_i = 1\).
 
 Для доказательства второго неравенства перенесём всё в левую часть и применим неравенство Йенсена:
@@ -422,8 +430,8 @@ H(\alpha) - \log k
 \sum_{i,j}p_{i,j}\cdot \log\frac{p_{i,*}\cdot p_{*,j}}{p_{i,j}} \le
 \log\left(\sum_{i,j}p_{i,j}\cdot \frac{p_{i,*}\cdot p_{*,j}}{p_{i,j}}\right) =
 \log\left(\sum_{i,j}p_{i,*}\cdot p_{*,j}\right) = \\
-= \log \underbrace{\left(\sum_{i}p_{i,*}\right)}_1\cdot
-     \underbrace{\left(\sum_{j}p_{*,j}\right)}_1 = 0.
+= \log \Biggl(\biggl(\underbrace{\sum_{i}p_{i,*}}_1\biggr)\cdot
+     \biggl(\underbrace{\sum_{j}p_{*,j}}_1\biggr)\Biggr) = 0.
 \end{multline*}
 
 Равенство в неравенстве Йенсена для $f(x) = \log(x)$ достигается только, если все точки равны, т.е. 
@@ -520,6 +528,14 @@ H(\alpha) - \log k
     \]
 
 \end{proof}
+
+\begin{statement}[chain rule for mutual information]
+    Имеют место следующие соотношения:
+    \begin{enumerate}
+        \item $I((\alpha,\beta) : \gamma) = I(\alpha : \gamma) + I(\beta: \gamma \mid \alpha)$.
+        \item $I((\alpha,\beta) : \gamma \mid \delta) = I(\alpha : \gamma\mid \delta) + I(\beta: \gamma \mid \alpha,\delta)$.
+    \end{enumerate}
+\end{statement}
 
 \subsection{Применение: опять о поиске фальшивой монетки}
 Теперь у нас достаточно знаний, чтобы доказать, что за три взвешивания нельзя
@@ -1126,14 +1142,15 @@ H(\gamma\mid\alpha,\beta)\ge 0, & I(\gamma:\alpha)\ge 0, & I(\gamma:\alpha\mid\b
     \end{tikzpicture}
     \end{center}
 Таким образом утверждение упрощается до $0\le I(\beta:\gamma) + I(\alpha:\beta\mid\gamma) +
-I(\alpha:\gamma\mid\beta).$
+I(\alpha:\gamma\mid\beta)$.
 \end{proof}
-\begin{corollary}[Теорема \ref{thm:volume}]
+\begin{corollary}[Теорема~\ref{thm:volume}]
 Для \(A\subset\bitstr\times\bitstr\times\bitstr\)
 \[2\chi(A) \le \chi_{12}(A) + \chi_{13}(A) + \chi_{23}(A).\]
 \end{corollary}
 \begin{proof}
-    Пусть $(\alpha,\beta,\gamma)$ равномерно распределены на $A$.
+		Пусть $(\alpha,\beta,\gamma)$ равномерно распределены на $A$ (т.е. случайные величины~--- это координаты точек в
+		множестве $A$).
     \[
         2\chi(A) = 2H(\alpha,\beta,\gamma)\le 
         \underbrace{H(\alpha,\beta) }_{\le\chi_{12}(A)} + 
@@ -1141,6 +1158,45 @@ I(\alpha:\gamma\mid\beta).$
         \underbrace{H(\beta,\gamma) }_{\le\chi_{23}(A)}.
     \]
 \end{proof}
+Можно рассмотреть обобщение этой теоремы на произвольное число координат.
+\begin{theorem}[Лемма Ширера]
+	Пусть $X$~--- случайная величина, распределённая на $\bits^n$.
+	Для любого распределения $S$ на подмножествах $[n]$, при котором 
+	$\Pr[i\in S]\ge\mu$, выполняется $\E[H(X_S)]\ge \mu\cdot H(X)$.
+\end{theorem}
+\begin{proof}
+	Для любого множества $T=\{\seqn{i}{k}\}\subset [n]$, 
+	$i_1<i_2<\dotsb<i_k$ выполняется
+	\begin{align*}
+		H(X_T) 
+		&= H(X_{i_1}) + H(X_{i_2}\mid X_{i_1}) + \dotsb + H(X_{i_k}\mid X_{i_1}, \dotsc, X_{i_{k-1}})\\
+		&= H(X_{i_1}) + H(X_{i_2}\mid X_{<i_1}) + \dotsb + H(X_{i_k}\mid X_{<i_k}).
+	\end{align*}
+	Теперь применим этот факт к распределению $S$.
+	\begin{align*}
+		\E_S[H(X_S)] 
+		&\ge \E_S\biggl[\sum_{i\in S} H(X_i\mid X_{<i})\biggr]
+		 = \sum_{i\in[n]}\Pr[i\in S]\cdot H(X_i\mid X_{<i})\\
+		&\ge \mu\sum_{i \in [n]} H(X_i\mid X_{<i}) = \mu\cdot H(X).
+	\end{align*}
+\end{proof}
+У леммы Ширера есть много применений. 
+\begin{example}[Подсчёт треугольников в графе]
+	Пусть $G=(V,E)$~--- неориентированный граф с $t$ треугольниками, и пусть $\ell = |E|$. Покажем, что $t\le
+	(2\ell)^{3/2} / 6$.
+	\begin{proof}
+		Пусть $\alpha,\beta,\gamma$ равномерно распределены на вершинах треугольников. Тогда $H(\alpha,\beta,\gamma) =
+		\log(6t)$, т.к. каждый треугольник случается шестью различными перестановками. Пусть распределение $S$
+		равномерно на подмножествах $\{1,2,3\}$ размера $2$. Тогда $\Pr[i\in S] = 2/3$. По лемме Ширера 
+	\[
+		\E_S[H(X_S)]\ge\frac23\log(6t),
+	\]
+	т.е. существует $T\subset \{1,2,3\}$, для которого $H(X_T)\ge \frac23 \log(6t)$.
+	С другой стороны $X_T$~--- это распределение на рёбрах графа, то есть $\log(2\ell)\ge H(X_T)$. Из этого получаем,
+	что $2\ell \ge (6t)^{2/3}$.
+	\end{proof}
+	Обобщение для вложения произвольных графов см. в~\cite{rao10}.
+\end{example}
 
 \begin{statement}\label{st:someentropyineq}
     Для любых $\alpha$, $\beta$ и $\gamma$ выполняется следующее неравенство 
@@ -1329,7 +1385,7 @@ I(\alpha:\gamma\mid\beta).$
        H(x,a) + H(y,a) \le H(x) + H(y) + H(a)\implies H(a\mid x) + H(a \mid y) \le H(a).
     \]
 \end{proof}
-\begin{problem}[Верещагин]
+\begin{problem}[Верещагин,\cite{KRV18}]
     Рассмотрим двудольный граф с вершинами $(L,R)$ с цветными рёбрами.
     Все рёбра инцидентные одной вершине разноцветные, степень в левой доле не меньше $n$, 
     в правой~--- не меньше $m$. Пусть известно, что для пары вершин $(x\in L, y\in R)$
@@ -2128,7 +2184,7 @@ Y)\times Z$}~--- нужно только дополнительно потреб
     \)
     Будем называть $\mu^*$ \emph{труднейшим} распределением для $\Pi$.
 \end{theorem}
-\begin{proof} Для детерминированных протоколов $\IC^{ext}(\Pi) = H_\mu(\Pi).$
+\begin{proof} Для детерминированных протоколов $\IC^{ext}(\Pi) = H_\mu(\Pi)$.
     Первое утверждение теоремы следует из верхней оценки на этнропию (энтропия
     случайной величины не превосходит логарифм числа исходов):
     \[
@@ -3458,7 +3514,12 @@ K(w(F) \mid F) \ge \alpha |F| - 2\max_{t\in F} K(F\mid t).
     \bibitem{DMWW12} D. Gavinsky, O. Meir, O. Weinstein, A. Wigderson. \emph{Toward better formula lower bounds: 
     an information complexity approach to the KRW composition conjecture.} STOC 2014.
 
+    \bibitem{KRV18} T.Kaced, A.E. Romashchenko, N.K.Vereshchagin, \emph{A Conditional Information Inequality and Its Combinatorial Applications}.
+    {{IEEE} Trans. Information Theory}, 2018.
+
     \bibitem{NK97} E. Nisan, N. Kushilevitz. \emph{Communication complexity}, 1997.
+
+	\bibitem{rao10} A. Rao. \emph{Notes for CSE533: Information Theory in Computer Science}, 2010. \\ \url{https://homes.cs.washington.edu/~anuprao/pubs/CSE533Autumn2010/}
 
 \end{thebibliography}
 
